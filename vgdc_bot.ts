@@ -14,8 +14,11 @@
 
 
 import { Client, Message } from "discord.js";
+import * as fs from 'fs';
 
 const BotClient: Client = new Client();
+
+const TokenFile: string = "token/token.txt";
 
 const ChannelBotCommands: string = "591789863116996610";
 const ChannelLabStatus: string = "629369478462963722";
@@ -132,4 +135,5 @@ BotClient.on("message", (receivedMessage) => {
 
 // =========================================================================
 
-BotClient.login("NTYzNTg4NjI4MTE1MzU3Njk2.XKbg_g.ELHxFhrx2BFjCLAX2pnaNtUJF8M");
+let token: string = fs.readFileSync(TokenFile).toString();
+BotClient.login(token);
