@@ -15,4 +15,8 @@ export class ScaffoldServer {
 	public constructor(serverName: string) {
 		this.serverName = serverName;
 	}
+
+	public createServer(): void {
+
+	}
 }

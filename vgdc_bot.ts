@@ -14,12 +14,14 @@
 
 
 import { Client, Message } from "discord.js";
-import * as fs from 'fs';
+import * as fs from "fs";
+import { ScaffoldServer } from "./ScaffoldServer";
 
 const BotClient: Client = new Client();
 
 const TokenFile: string = "token/token.txt";
 
+const ServerVGDC: string = "228326116270538753";
 const ChannelBotCommands: string = "591789863116996610";
 const ChannelLabStatus: string = "629369478462963722";
 const Role1: string = "591784945765187588";
@@ -33,7 +35,15 @@ const SecretLabRegex: RegExp = /(?:secret\s+lab)/i;
 
 var labOpen: boolean = false;
 
-var test: Object = {};
+const GameJamMode: boolean = true;
+const ServerGameJam: string = "634283765555920897";
+const ChannelGameJamRoles: string = "634794719033163826";
+const RoleGameJamDesigner: string = "634463651989946381";
+const RoleGameJamAudioDesigner: string = "634463797221916672";
+const RoleGameJamArtist: string  = "634463662718844940";
+const RoleGameJamProgrammer: string = "634463664765665321";
+const RoleGameJamWriter: string = "634463666909216816";
+const RoleGameJamProducer: string = "634463670461792297";
 
 // =========================================================================
 
@@ -105,6 +115,35 @@ function processCommand(message: Message): void {
 	}
 }
 
+
+function processCommandGameJam(message: Message): void {
+	switch (message.content.substr(1)) {
+		case "designer":
+			message.member.addRole(RoleGameJamDesigner);
+			break;
+
+		case "audio":
+			message.member.addRole(RoleGameJamAudioDesigner);
+			break;
+		
+		case "artist":
+			message.member.addRole(RoleGameJamArtist);
+			break;
+		
+		case "programmer":
+			message.member.addRole(RoleGameJamProgrammer);
+			break;
+		
+		case "writer":
+			message.member.addRole(RoleGameJamWriter);
+			break;
+		
+		case "producer":
+			message.member.addRole(RoleGameJamProducer);
+			break;
+	}
+}
+
 // =========================================================================
 
 BotClient.on("ready", () => {
@@ -119,15 +158,19 @@ BotClient.on("message", (receivedMessage) => {
 	if (receivedMessage.author === BotClient.user)
 		return;
 
+	// GAME JAM
+	if (GameJamMode && receivedMessage.guild.id === ServerGameJam && receivedMessage.channel.id === ChannelGameJamRoles && receivedMessage.content[0] === '!')
+		processCommandGameJam(receivedMessage);
+
 	// Commands
-	if ((receivedMessage.channel.id === ChannelBotCommands || receivedMessage.channel.id === ChannelLabStatus) && receivedMessage.content[0] == '!')
+	if (receivedMessage.guild.id === ServerVGDC && (receivedMessage.channel.id === ChannelBotCommands || receivedMessage.channel.id === ChannelLabStatus) && receivedMessage.content[0] === '!')
 		processCommand(receivedMessage);
 
-	if (receivedMessage.content.search(SecretLabRegex) !== -1) {
+	if (receivedMessage.guild.id === ServerVGDC && receivedMessage.content.search(SecretLabRegex) !== -1) {
 		receivedMessage.channel.send(`${mention(receivedMessage.author.id)} I think you mean "Quiet Lab."`);
 	}
 
-	if (receivedMessage.content.search(QuestionRegex) !== -1) {
+	if (receivedMessage.guild.id === ServerVGDC && receivedMessage.content.search(QuestionRegex) !== -1) {
 		receivedMessage.channel.send(`${mention(receivedMessage.author.id)} Hi there. I happened to hear you ask whether the lab is open. ${labOpen ? "Yes. It is." : "No. It's not."} Have a wonderful day.`);
 		return;
 	}
@@ -135,5 +178,5 @@ BotClient.on("message", (receivedMessage) => {
 
 // =========================================================================
 
-let token: string = fs.readFileSync(TokenFile).toString();
+var token: string = fs.readFileSync(TokenFile).toString();
 BotClient.login(token);
