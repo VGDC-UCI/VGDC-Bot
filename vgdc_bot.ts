@@ -1,13 +1,13 @@
 /*
  * =========================================================
  * =========================================================
- * 				 THIS IS A PROFESSIONAL BOT.
- *					THEIR NAME IS LIPPO,
- * 						 I GUESS???
- * 				 AND NOW THEY'RE WRITTEN IN
- * 					 TYPESCRIPT! SHINY!
+ * THIS IS A PROFESSIONAL BOT.
+ * THEIR NAME IS LIPPO, I GUESS???
+ * 						 
+ * AND NOW THEY'RE WRITTEN IN
+ * TYPESCRIPT! SHINY!
  * 
- * 	   Written by Duncan Sparks for the UCI VGDC server
+ * Written by Duncan Sparks for the UCI VGDC server
  * =========================================================
  * =========================================================
  */
@@ -18,6 +18,9 @@ import * as fs from "fs";
 import { ScaffoldServer } from "./ScaffoldServer";
 
 const BotClient: Client = new Client();
+
+const BotVersion: string = "1.25";
+const BotVersionMsg: string = "Add version command";
 
 const TokenFile: string = "token/token.txt";
 
@@ -112,6 +115,12 @@ function processCommand(message: Message): void {
 
 			break;
 		}
+
+		case "version":
+			if ((message.member.roles.find(r => r.name === "VGDC Officer") || message.member.roles.find(r => r.name === "VGDC Admin")))
+				message.channel.send(`Lippo's current version is ${BotVersion} (${BotVersionMsg})`);
+
+			break;
 	}
 }
 
