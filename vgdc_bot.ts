@@ -15,12 +15,12 @@
 
 import { Client, Message } from "discord.js";
 import * as fs from "fs";
-import { ScaffoldServer } from "./ScaffoldServer";
+import { ScaffoldServer } from "./ScaffoldServer"; // Using this later, possibly
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.25";
-const BotVersionMsg: string = "Add version command";
+const BotVersion: string = "1.26";
+const BotVersionMsg: string = "Disable game jam mode";
 
 const TokenFile: string = "token/token.txt";
 
@@ -38,7 +38,7 @@ const SecretLabRegex: RegExp = /(?:secret\s+lab)/i;
 
 var labOpen: boolean = false;
 
-const GameJamMode: boolean = true;
+const GameJamMode: boolean = false;
 const ServerGameJam: string = "634283765555920897";
 const ChannelGameJamRoles: string = "634794719033163826";
 const RoleGameJamDesigner: string = "634463651989946381";
