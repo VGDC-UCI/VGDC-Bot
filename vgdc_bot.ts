@@ -19,7 +19,7 @@ import { ScaffoldServer } from "./ScaffoldServer"; // Using this later, possibly
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.26";
+const BotVersion: string = "1.29";
 const BotVersionMsg: string = "Disable game jam mode";
 
 const TokenFile: string = "token/token.txt";
@@ -179,10 +179,10 @@ BotClient.on("message", (receivedMessage) => {
 		receivedMessage.channel.send(`${mention(receivedMessage.author.id)} I think you mean "Quiet Lab."`);
 	}
 
-	if (receivedMessage.guild.id === ServerVGDC && receivedMessage.content.search(QuestionRegex) !== -1) {
+	/* if (receivedMessage.guild.id === ServerVGDC && receivedMessage.content.search(QuestionRegex) !== -1) {
 		receivedMessage.channel.send(`${mention(receivedMessage.author.id)} Hi there. I happened to hear you ask whether the lab is open. ${labOpen ? "Yes. It is." : "No. It's not."} Have a wonderful day.`);
 		return;
-	}
+	} */
 });
 
 // =========================================================================
