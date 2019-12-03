@@ -19,8 +19,8 @@ import { ScaffoldServer } from "./ScaffoldServer"; // Using this later, possibly
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.29";
-const BotVersionMsg: string = "Disable game jam mode";
+const BotVersion: string = "1.3";
+const BotVersionMsg: string = "No you don't Oscar";
 
 const TokenFile: string = "token/token.txt";
 
@@ -34,7 +34,7 @@ const Role4: string = "591785189349261312";
 
 const QuestionRegex: RegExp = /(?:is.+the.+lab.+(?:open|closed))|(?:is.+the.+game.+lab.+(?:open|closed))|(?:(?:is.+)?anyone.+(?:in|at).+the.+lab)|(?:(?:is.+)?anyone.+(?:in|at).+the.+game.+lab)|(?:are.+there.+(?:any.+)?in.+the.+lab)|(?:are.+there.+(?:any)?.+(?:in|at).+the.+game.+lab)|(?:any.+(?:in|at).+the.+lab)|(?:any.+(?:in|at).+the.+game.+lab)|(?:(?:is)?.+(?:there.+)?(?:a|an)?(?:officer|person|anyone|someone).+(?:in|at).+the.+(?:game.+)?lab)/i;
 //const BotNameRegex: RegExp = /(?:Lippo)/i;
-const SecretLabRegex: RegExp = /(?:secret\s+lab)/i;
+const SecretLabRegex: RegExp = /(?:s[e3&]cret\s+lab)/i;
 
 var labOpen: boolean = false;
 
