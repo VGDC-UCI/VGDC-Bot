@@ -34,7 +34,7 @@ const Role4: string = "591785189349261312";
 
 const QuestionRegex: RegExp = /(?:is.+the.+lab.+(?:open|closed))|(?:is.+the.+game.+lab.+(?:open|closed))|(?:(?:is.+)?anyone.+(?:in|at).+the.+lab)|(?:(?:is.+)?anyone.+(?:in|at).+the.+game.+lab)|(?:are.+there.+(?:any.+)?in.+the.+lab)|(?:are.+there.+(?:any)?.+(?:in|at).+the.+game.+lab)|(?:any.+(?:in|at).+the.+lab)|(?:any.+(?:in|at).+the.+game.+lab)|(?:(?:is)?.+(?:there.+)?(?:a|an)?(?:officer|person|anyone|someone).+(?:in|at).+the.+(?:game.+)?lab)/i;
 //const BotNameRegex: RegExp = /(?:Lippo)/i;
-const SecretLabRegex: RegExp = /(?:s[e3&]cret\s+lab)/i;
+const SecretLabRegex: RegExp = /(?:[s$]\s*(?:[e3&]\s*)+[ck]\s*[r4]\s*(?:[e3&i1]\s*)+[t7]\s*([e3&]\s*)*\s*[l1]\s*[a@8&]\s*[b8])/i;
 
 var labOpen: boolean = false;
 
