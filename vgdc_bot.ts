@@ -19,15 +19,15 @@ import { ScaffoldServer } from "./ScaffoldServer"; // Using this later, possibly
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.41";
-const BotVersionMsg: string = "New reaction functionality testing";
+const BotVersion: string = "1.5";
+const BotVersionMsg: string = "New reaction functionality";
 
 const TokenFile: string = "token/token.txt";
 
 const ServerVGDC: string = "228326116270538753";
 const ChannelBotCommands: string = "591789863116996610";
 const ChannelLabStatus: string = "629369478462963722";
-const ChannelReactions: string = "653107418481295383";
+const ChannelReactions: string = "653120059262369793";
 
 const ReactionID1: string = "%F0%9F%87%AD";
 const ReactionID2: string = "%F0%9F%87%B8";
@@ -93,9 +93,9 @@ function processCommand(message: Message): void {
 			break;
 		}*/
 
-		case "lab":
+		/*case "lab":
 			message.channel.send(`The Game Lab is currently ${labOpen ? "OPEN" : "CLOSED"}.`);
-			break;
+			break;*/
 	
 		/*case "help":
 			printHelp(message);
