@@ -28,6 +28,8 @@ const ServerVGDC: string = "228326116270538753";
 const ChannelBotCommands: string = "591789863116996610";
 const ChannelLabStatus: string = "629369478462963722";
 const ChannelReactionTest: string = "653107418481295383";
+const ReactionID: string = "653112172406243339";
+
 const Role1: string = "591784945765187588";
 const Role2: string = "591785143757176842";
 const Role3: string = "591785165626408960";
@@ -188,14 +190,22 @@ BotClient.on("message", (receivedMessage) => {
 
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
-	//if (messageReaction.message.guild.id === ServerVGDC && messageReaction.message.channel.id === "653107418481295383") {
-		console.log("SOMEONE REACTED TO SOMETHING");
-		//switch (messageReaction.emoji.toString()) {
-
-		//messageReaction.message.channel.send("TEST");
-		//messageReaction.message.channel.send(`YOU JUST REACTED WITH A [toString: ${messageReaction.emoji.toString()}, name: ${messageReaction.emoji.name}, identifier: ${messageReaction.emoji.identifier}]`);
-		//}
-	//}
+	if (messageReaction.message.guild.id === ServerVGDC && messageReaction.message.id === ReactionID) {
+		switch (messageReaction.emoji.name) {
+			case ":regional_indicator_h:":
+				messageReaction.message.member.addRole(Role1);
+				break;
+			case ":regional_indicator_s:":
+				messageReaction.message.member.addRole(Role2);
+				break;
+			case ":regional_indicator_t:":
+				messageReaction.message.member.addRole(Role3);
+				break;
+			case ":regional_indicator_a:":
+				messageReaction.message.member.addRole(Role4);
+				break;
+		}
+	}
 });
 
 // =========================================================================
