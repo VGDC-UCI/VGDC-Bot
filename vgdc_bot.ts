@@ -13,14 +13,14 @@
  */
 
 
-import { Client, Message } from "discord.js";
+import { Client, Message, MessageReaction } from "discord.js";
 import * as fs from "fs";
 import { ScaffoldServer } from "./ScaffoldServer"; // Using this later, possibly
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.3";
-const BotVersionMsg: string = "No you don't Oscar";
+const BotVersion: string = "1.4";
+const BotVersionMsg: string = "New reaction functionality testing";
 
 const TokenFile: string = "token/token.txt";
 
@@ -62,7 +62,7 @@ function printHelp(message: Message): void {
 
 function processCommand(message: Message): void {
 	switch (message.content.substr(1)) {
-		case "he": {
+		/*case "he": {
 			message.member.addRole(Role1);
 			console.log(`Added pronouns role to ${message.member.user.tag}`);
 			break;
@@ -84,15 +84,15 @@ function processCommand(message: Message): void {
 			message.member.addRole(Role4);
 			console.log(`Added pronouns role to ${message.member.user.tag}`);
 			break;
-		}
+		}*/
 
 		case "lab":
 			message.channel.send(`The Game Lab is currently ${labOpen ? "OPEN" : "CLOSED"}.`);
 			break;
 	
-		case "help":
+		/*case "help":
 			printHelp(message);
-			break;
+			break;*/
 
 		case "labopen": {
 			if ((message.member.roles.find(r => r.name === "VGDC Officer") || message.member.roles.find(r => r.name === "VGDC Admin")) && message.channel.id === ChannelLabStatus) {
@@ -183,6 +183,15 @@ BotClient.on("message", (receivedMessage) => {
 		receivedMessage.channel.send(`${mention(receivedMessage.author.id)} Hi there. I happened to hear you ask whether the lab is open. ${labOpen ? "Yes. It is." : "No. It's not."} Have a wonderful day.`);
 		return;
 	} */
+});
+
+
+BotClient.on("messageReactionAdd", (messageReaction, user) => {
+	if (messageReaction.message.guild.id === ServerVGDC && messageReaction.message.id === "653107475729481738") {
+		//switch (messageReaction.emoji.toString()) {
+		messageReaction.message.channel.send(`YOU JUST REACTED WITH A [toString: ${messageReaction.emoji.toString()}, name: ${messageReaction.emoji.name}, identifier: ${messageReaction.emoji.identifier}]`);
+		//}
+	}
 });
 
 // =========================================================================
