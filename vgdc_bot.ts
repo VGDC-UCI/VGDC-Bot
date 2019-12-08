@@ -191,7 +191,9 @@ BotClient.on("message", (receivedMessage) => {
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelReactions) {
+		messageReaction.message.member.addRole(Role3);
 		messageReaction.message.channel.send("HELLO THERE 2");
+		messageReaction.message.channel.send(`THAT REACTION'S ID IS ${messageReaction.emoji.identifier}`);
 		switch (messageReaction.emoji.toString()) {
 			case ":regional_indicator_h:":
 				messageReaction.message.member.addRole(Role1);
