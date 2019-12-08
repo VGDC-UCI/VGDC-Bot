@@ -28,7 +28,11 @@ const ServerVGDC: string = "228326116270538753";
 const ChannelBotCommands: string = "591789863116996610";
 const ChannelLabStatus: string = "629369478462963722";
 const ChannelReactions: string = "653107418481295383";
-const ReactionID: string = "653112172406243339";
+
+const ReactionID1: string = "%F0%9F%87%AD";
+const ReactionID2: string = "%F0%9F%87%B8";
+const ReactionID3: string = "%F0%9F%87%B9";
+const ReactionID4: string = "%F0%9F%87%A6";
 
 const Role1: string = "591784945765187588";
 const Role2: string = "591785143757176842";
@@ -191,20 +195,17 @@ BotClient.on("message", (receivedMessage) => {
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelReactions) {
-		messageReaction.message.member.addRole(Role3);
-		messageReaction.message.channel.send("HELLO THERE 2");
-		messageReaction.message.channel.send(`THAT REACTION'S ID IS ${messageReaction.emoji.identifier}`);
-		switch (messageReaction.emoji.toString()) {
-			case ":regional_indicator_h:":
+		switch (messageReaction.emoji.identifier) {
+			case ReactionID1:
 				messageReaction.message.member.addRole(Role1);
 				break;
-			case ":regional_indicator_s:":
+			case ReactionID2:
 				messageReaction.message.member.addRole(Role2);
 				break;
-			case ":regional_indicator_t:":
+			case ReactionID3:
 				messageReaction.message.member.addRole(Role3);
 				break;
-			case ":regional_indicator_a:":
+			case ReactionID4:
 				messageReaction.message.member.addRole(Role4);
 				break;
 		}
