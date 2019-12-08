@@ -200,13 +200,13 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
 				break;
 			case ReactionID2:
-				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
+				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role2));
 				break;
 			case ReactionID3:
-				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
+				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role3));
 				break;
 			case ReactionID4:
-				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
+				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role4));
 				break;
 		}
 	}
