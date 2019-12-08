@@ -197,16 +197,16 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelReactions) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
-				messageReaction.message.member.addRole(Role1);
+				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
 				break;
 			case ReactionID2:
-				messageReaction.message.member.addRole(Role2);
+				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
 				break;
 			case ReactionID3:
-				messageReaction.message.member.addRole(Role3);
+				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
 				break;
 			case ReactionID4:
-				messageReaction.message.member.addRole(Role4);
+				messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
 				break;
 		}
 	}
