@@ -190,6 +190,7 @@ BotClient.on("message", (receivedMessage) => {
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.guild.id === ServerVGDC && messageReaction.message.channel.id === "653107418481295383") {
 		//switch (messageReaction.emoji.toString()) {
+		messageReaction.message.channel.send("TEST");
 		messageReaction.message.channel.send(`YOU JUST REACTED WITH A [toString: ${messageReaction.emoji.toString()}, name: ${messageReaction.emoji.name}, identifier: ${messageReaction.emoji.identifier}]`);
 		//}
 	}
