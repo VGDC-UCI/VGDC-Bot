@@ -195,6 +195,7 @@ BotClient.on("message", (receivedMessage) => {
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelReactions) {
+		messageReaction.message.channel.send("TEST!!!");
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				//messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
