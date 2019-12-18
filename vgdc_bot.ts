@@ -19,8 +19,8 @@ import { ScaffoldServer } from "./ScaffoldServer"; // Using this later, possibly
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.5";
-const BotVersionMsg: string = "New reaction functionality";
+const BotVersion: string = "1.51";
+const BotVersionMsg: string = "New reaction functionality (at least, trying to)";
 
 const TokenFile: string = "token/token.txt";
 
