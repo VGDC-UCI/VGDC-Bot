@@ -194,7 +194,7 @@ BotClient.on("message", (receivedMessage) => {
 
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
-	//if (messageReaction.message.channel.id === ChannelReactions) {
+	if (messageReaction.message.channel.id === ChannelReactions) {
 		messageReaction.message.channel.send("TEST!!!");
 		/*switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
@@ -214,7 +214,7 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 				messageReaction.message.guild.member(user).addRole(Role4);
 				break;
 		}*/
-	//}
+	}
 });
 
 // =========================================================================
