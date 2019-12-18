@@ -19,8 +19,8 @@ import { ScaffoldServer } from "./ScaffoldServer"; // Using this later, possibly
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.51";
-const BotVersionMsg: string = "New reaction functionality (at least, trying to)";
+const BotVersion: string = "1.55";
+const BotVersionMsg: string = "New reaction functionality";
 
 const TokenFile: string = "token/token.txt";
 
@@ -195,23 +195,38 @@ BotClient.on("message", (receivedMessage) => {
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelReactions) {
-		//messageReaction.message.channel.send("TEST!!!");
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
-				//messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role1));
 				messageReaction.message.guild.member(user).addRole(Role1);
 				break;
 			case ReactionID2:
-				//messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role2));
 				messageReaction.message.guild.member(user).addRole(Role2);
 				break;
 			case ReactionID3:
-				//messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role3));
 				messageReaction.message.guild.member(user).addRole(Role3);
 				break;
 			case ReactionID4:
-				//messageReaction.message.guild.fetchMember(user).then((member) => member.addRole(Role4));
 				messageReaction.message.guild.member(user).addRole(Role4);
+				break;
+		}
+	}
+});
+
+
+BotClient.on("messageReactionRemove", (messageReaction, user) => {
+	if (messageReaction.message.channel.id === ChannelReactions) {
+		switch (messageReaction.emoji.identifier) {
+			case ReactionID1:
+				messageReaction.message.guild.member(user).removeRole(Role1);
+				break;
+			case ReactionID2:
+				messageReaction.message.guild.member(user).removeRole(Role2);
+				break;
+			case ReactionID3:
+				messageReaction.message.guild.member(user).removeRole(Role3);
+				break;
+			case ReactionID4:
+				messageReaction.message.guild.member(user).removeRole(Role4);
 				break;
 		}
 	}
