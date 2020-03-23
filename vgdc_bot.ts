@@ -2,9 +2,9 @@
  * =========================================================
  * =========================================================
  * THIS IS A PROFESSIONAL BOT.
- * THEIR NAME IS LIPPO, I GUESS???
+ * HIS NAME IS LIPPO, I GUESS???
  * 						 
- * AND NOW THEY'RE WRITTEN IN
+ * AND NOW HE'S WRITTEN IN
  * TYPESCRIPT! SHINY!
  * 
  * Written by Duncan Sparks for the UCI VGDC server
@@ -15,17 +15,17 @@
 
 import { Client, Message, MessageReaction } from "discord.js";
 import * as fs from "fs";
-import { ScaffoldServer } from "./ScaffoldServer"; // Using this later, possibly
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.55";
-const BotVersionMsg: string = "New reaction functionality";
+const BotVersion: string = "1.6";
+const BotVersionMsg: string = "New reaction functionality part two";
 
 const TokenFile: string = "token/token.txt";
 
 const ServerVGDC: string = "228326116270538753";
 const ChannelBotCommands: string = "591789863116996610";
+const ChannelBotTest: string = "691714798957887581";
 const ChannelLabStatus: string = "629369478462963722";
 const ChannelReactions: string = "653120059262369793";
 
@@ -33,6 +33,13 @@ const ReactionID1: string = "%F0%9F%87%AD";
 const ReactionID2: string = "%F0%9F%87%B8";
 const ReactionID3: string = "%F0%9F%87%B9";
 const ReactionID4: string = "%F0%9F%87%A6";
+
+const DepartmentID1: string = "🎨"; //"%F0%9F%96%8C"; // Art: artist palette
+const DepartmentID2: string = "🎵"; //"%F0%9F%8E%B5"; // Audio: musical note
+const DepartmentID3: string = "🎮"; //"%E2%9A%99"; // Design: video game
+const DepartmentID4: string = "☑️"; //"%E2%98%91"; // Production: ballot box with check
+const DepartmentID5: string = "⚙️"; //"" // Programming: gear
+const DepartmentID6: string = "📖"; // Writing: open book
 
 const Role1: string = "591784945765187588";
 const Role2: string = "591785143757176842";
@@ -55,6 +62,13 @@ const RoleGameJamProgrammer: string = "634463664765665321";
 const RoleGameJamWriter: string = "634463666909216816";
 const RoleGameJamProducer: string = "634463670461792297";
 
+const RoleArt: string = "691715402677485669";
+const RoleAudio: string = "691715513381945364";
+const RoleDesign: string = "691715413998043186";
+const RoleProduction: string = "691715438580596764";
+const RoleProgramming: string = "691715359496994818";
+const RoleWriting: string = "691715498668195911";
+
 // =========================================================================
 
 function mention(userId: string): string {
@@ -69,38 +83,6 @@ function printHelp(message: Message): void {
 
 function processCommand(message: Message): void {
 	switch (message.content.substr(1)) {
-		/*case "he": {
-			message.member.addRole(Role1);
-			console.log(`Added pronouns role to ${message.member.user.tag}`);
-			break;
-		}
-			
-		case "she": {
-			message.member.addRole(Role2);
-			console.log(`Added pronouns role to ${message.member.user.tag}`);
-			break;
-		}
-			
-		case "they": {
-			message.member.addRole(Role3);
-			console.log(`Added pronouns role to ${message.member.user.tag}`);
-			break;
-		}
-			
-		case "askme": {
-			message.member.addRole(Role4);
-			console.log(`Added pronouns role to ${message.member.user.tag}`);
-			break;
-		}*/
-
-		/*case "lab":
-			message.channel.send(`The Game Lab is currently ${labOpen ? "OPEN" : "CLOSED"}.`);
-			break;*/
-	
-		/*case "help":
-			printHelp(message);
-			break;*/
-
 		case "labopen": {
 			if ((message.member.roles.find(r => r.name === "VGDC Officer") || message.member.roles.find(r => r.name === "VGDC Admin")) && message.channel.id === ChannelLabStatus) {
 				BotClient.user.setActivity("Game Lab OPEN");
@@ -210,6 +192,29 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 				break;
 		}
 	}
+
+	if (messageReaction.message.channel.id === ChannelReactions || messageReaction.message.channel.id === ChannelBotTest) {
+		switch (messageReaction.emoji.identifier) {
+			case DepartmentID1:
+				messageReaction.message.guild.member(user).addRole(RoleArt);
+				break;
+			case DepartmentID2:
+				messageReaction.message.guild.member(user).addRole(RoleAudio);
+				break;
+			case DepartmentID3:
+				messageReaction.message.guild.member(user).addRole(RoleDesign);
+				break;
+			case DepartmentID4:
+				messageReaction.message.guild.member(user).addRole(RoleProduction);
+				break;
+			case DepartmentID5:
+				messageReaction.message.guild.member(user).addRole(RoleProgramming);
+				break;
+			case DepartmentID6:
+				messageReaction.message.guild.member(user).addRole(RoleWriting);
+				break;
+		}
+	}
 });
 
 
@@ -227,6 +232,29 @@ BotClient.on("messageReactionRemove", (messageReaction, user) => {
 				break;
 			case ReactionID4:
 				messageReaction.message.guild.member(user).removeRole(Role4);
+				break;
+		}
+	}
+
+	if (messageReaction.message.channel.id === ChannelReactions || messageReaction.message.channel.id === ChannelBotTest) {
+		switch (messageReaction.emoji.identifier) {
+			case DepartmentID1:
+				messageReaction.message.guild.member(user).removeRole(RoleArt);
+				break;
+			case DepartmentID2:
+				messageReaction.message.guild.member(user).removeRole(RoleAudio);
+				break;
+			case DepartmentID3:
+				messageReaction.message.guild.member(user).removeRole(RoleDesign);
+				break;
+			case DepartmentID4:
+				messageReaction.message.guild.member(user).removeRole(RoleProduction);
+				break;
+			case DepartmentID5:
+				messageReaction.message.guild.member(user).removeRole(RoleProgramming);
+				break;
+			case DepartmentID6:
+				messageReaction.message.guild.member(user).removeRole(RoleWriting);
 				break;
 		}
 	}
