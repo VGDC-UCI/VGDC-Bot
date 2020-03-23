@@ -34,12 +34,12 @@ const ReactionID2: string = "%F0%9F%87%B8";
 const ReactionID3: string = "%F0%9F%87%B9";
 const ReactionID4: string = "%F0%9F%87%A6";
 
-const DepartmentID1: string = "🎨"; //"%F0%9F%96%8C"; // Art: artist palette
-const DepartmentID2: string = "🎵"; //"%F0%9F%8E%B5"; // Audio: musical note
-const DepartmentID3: string = "🎮"; //"%E2%9A%99"; // Design: video game
-const DepartmentID4: string = "☑️"; //"%E2%98%91"; // Production: ballot box with check
-const DepartmentID5: string = "⚙️"; //"" // Programming: gear
-const DepartmentID6: string = "📖"; // Writing: open book
+const DepartmentID1: string = "%F0%9F%8E%A8"; //"🎨"; //"%F0%9F%96%8C"; // Art: artist palette
+const DepartmentID2: string = "%F0%9F%8E%B5"; // "🎵"; //"%F0%9F%8E%B5"; // Audio: musical note
+const DepartmentID3: string = "%F0%9F%8E%AE"; // "🎮"; //"%E2%9A%99"; // Design: video game
+const DepartmentID4: string = "%E2%98%91%EF%B8%8F"; //"☑️"; //"%E2%98%91"; // Production: ballot box with check
+const DepartmentID5: string = "%E2%9A%99%EF%B8%8F";  //"⚙️"; //"" // Programming: gear
+const DepartmentID6: string = "%F0%9F%93%96"; //"📖"; // Writing: open book
 
 const Role1: string = "591784945765187588";
 const Role2: string = "591785143757176842";
@@ -73,11 +73,6 @@ const RoleWriting: string = "691715498668195911";
 
 function mention(userId: string): string {
 	return `<@${userId}>`;
-}
-
-
-function printHelp(message: Message): void {
-	message.channel.send(`${mention(message.author.id)} Type \`!he\`, \`!she\`, \`!they\`, or \`!askme\` to let us know what your preferred pronouns are.\nType \`!lab\` or look at my name for the current status of the Game Lab.`);
 }
 
 
