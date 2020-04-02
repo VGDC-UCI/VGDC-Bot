@@ -13,7 +13,7 @@
  */
 
 
-import { Client, Message, MessageReaction } from "discord.js";
+import { Client, Message, MessageReaction, UserResolvable } from "discord.js";
 import * as fs from "fs";
 
 const BotClient: Client = new Client();
@@ -176,34 +176,34 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelBotCommands) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
-				messageReaction.message.member.roles.add(Role1);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(Role1);
 				break;
 			case ReactionID2:
-				messageReaction.message.member.roles.add(Role2);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(Role2);
 				break;
 			case ReactionID3:
-				messageReaction.message.member.roles.add(Role3);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(Role3);
 				break;
 			case ReactionID4:
-				messageReaction.message.member.roles.add(Role4);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(Role4);
 				break;
 			case DepartmentID1:
-				messageReaction.message.member.roles.add(RoleArt);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleArt);
 				break;
 			case DepartmentID2:
-				messageReaction.message.member.roles.add(RoleAudio);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleAudio);
 				break;
 			case DepartmentID3:
-				messageReaction.message.member.roles.add(RoleDesign);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleDesign);
 				break;
 			case DepartmentID4:
-				messageReaction.message.member.roles.add(RoleProduction);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleProduction);
 				break;
 			case DepartmentID5:
-				messageReaction.message.member.roles.add(RoleProgramming);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleProgramming);
 				break;
 			case DepartmentID6:
-				messageReaction.message.member.roles.add(RoleWriting);
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleWriting);
 				break;
 		}
 	}
@@ -214,34 +214,34 @@ BotClient.on("messageReactionRemove", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelBotCommands) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
-				messageReaction.message.member.roles.remove(Role1);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(Role1);
 				break;
 			case ReactionID2:
-				messageReaction.message.member.roles.remove(Role2);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(Role2);
 				break;
 			case ReactionID3:
-				messageReaction.message.member.roles.remove(Role3);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(Role3);
 				break;
 			case ReactionID4:
-				messageReaction.message.member.roles.remove(Role4);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(Role4);
 				break;
 			case DepartmentID1:
-				messageReaction.message.member.roles.remove(RoleArt);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(RoleArt);
 				break;
 			case DepartmentID2:
-				messageReaction.message.member.roles.remove(RoleAudio);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(RoleAudio);
 				break;
 			case DepartmentID3:
-				messageReaction.message.member.roles.remove(RoleDesign);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(RoleDesign);
 				break;
 			case DepartmentID4:
-				messageReaction.message.member.roles.remove(RoleProduction);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(RoleProduction);
 				break;
 			case DepartmentID5:
-				messageReaction.message.member.roles.remove(RoleProgramming);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(RoleProgramming);
 				break;
 			case DepartmentID6:
-				messageReaction.message.member.roles.remove(RoleWriting);
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(RoleWriting);
 				break;
 		}
 	}
