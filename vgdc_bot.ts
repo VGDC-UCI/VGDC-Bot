@@ -18,16 +18,14 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.6";
-const BotVersionMsg: string = "New reaction functionality part two";
+const BotVersion: string = "1.63";
+const BotVersionMsg: string = "Hopefully fix pronoun reactions";
 
 const TokenFile: string = "token/token.txt";
 
 const ServerVGDC: string = "228326116270538753";
-const ChannelBotCommands: string = "591789863116996610";
-const ChannelBotTest: string = "691714798957887581";
+const ChannelBotCommands: string = "653120059262369793";
 const ChannelLabStatus: string = "629369478462963722";
-const ChannelReactions: string = "653120059262369793";
 
 const ReactionID1: string = "%F0%9F%87%AD";
 const ReactionID2: string = "%F0%9F%87%B8";
@@ -79,7 +77,10 @@ function mention(userId: string): string {
 function processCommand(message: Message): void {
 	switch (message.content.substr(1)) {
 		case "labopen": {
-			if ((message.member.roles.find(r => r.name === "VGDC Officer") || message.member.roles.find(r => r.name === "VGDC Admin")) && message.channel.id === ChannelLabStatus) {
+			let roleTest = message.guild.roles.find(r => r.name === "VGDC Officer");
+			let roleTest2 = message.guild.roles.find(r => r.name === "VGDC Admin");
+
+			if ((message.member.roles.has(roleTest.id) || message.member.roles.has(roleTest2.id)) && message.channel.id === ChannelLabStatus) {
 				BotClient.user.setActivity("Game Lab OPEN");
 				BotClient.user.setStatus("online");
 				labOpen = true;
@@ -90,7 +91,10 @@ function processCommand(message: Message): void {
 		}
 
 		case "labclosed": {
-			if ((message.member.roles.find(r => r.name === "VGDC Officer") || message.member.roles.find(r => r.name === "VGDC Admin")) && message.channel.id === ChannelLabStatus) {
+			let roleTest = message.guild.roles.find(r => r.name === "VGDC Officer");
+			let roleTest2 = message.guild.roles.find(r => r.name === "VGDC Admin");
+
+			if ((message.member.roles.has(roleTest.id) || message.member.roles.has(roleTest2.id)) && message.channel.id === ChannelLabStatus) {
 				BotClient.user.setActivity("Game Lab CLOSED");
 				BotClient.user.setStatus("dnd");
 				labOpen = false;
@@ -100,11 +104,15 @@ function processCommand(message: Message): void {
 			break;
 		}
 
-		case "version":
-			if ((message.member.roles.find(r => r.name === "VGDC Officer") || message.member.roles.find(r => r.name === "VGDC Admin")))
+		case "version": {
+			let roleTest = message.guild.roles.find(r => r.name === "VGDC Officer");
+			let roleTest2 = message.guild.roles.find(r => r.name === "VGDC Admin");
+
+			if ((message.member.roles.has(roleTest.id) || message.member.roles.has(roleTest2.id)) && message.channel.id === ChannelLabStatus)
 				message.channel.send(`Lippo's current version is ${BotVersion} (${BotVersionMsg})`);
 
 			break;
+		}
 	}
 }
 
@@ -171,7 +179,7 @@ BotClient.on("message", (receivedMessage) => {
 
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
-	if (messageReaction.message.channel.id === ChannelReactions) {
+	if (messageReaction.message.channel.id === ChannelBotCommands) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user).addRole(Role1);
@@ -185,11 +193,6 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 			case ReactionID4:
 				messageReaction.message.guild.member(user).addRole(Role4);
 				break;
-		}
-	}
-
-	if (messageReaction.message.channel.id === ChannelReactions || messageReaction.message.channel.id === ChannelBotTest) {
-		switch (messageReaction.emoji.identifier) {
 			case DepartmentID1:
 				messageReaction.message.guild.member(user).addRole(RoleArt);
 				break;
@@ -214,7 +217,7 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 
 
 BotClient.on("messageReactionRemove", (messageReaction, user) => {
-	if (messageReaction.message.channel.id === ChannelReactions) {
+	if (messageReaction.message.channel.id === ChannelBotCommands) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user).removeRole(Role1);
@@ -228,11 +231,6 @@ BotClient.on("messageReactionRemove", (messageReaction, user) => {
 			case ReactionID4:
 				messageReaction.message.guild.member(user).removeRole(Role4);
 				break;
-		}
-	}
-
-	if (messageReaction.message.channel.id === ChannelReactions || messageReaction.message.channel.id === ChannelBotTest) {
-		switch (messageReaction.emoji.identifier) {
 			case DepartmentID1:
 				messageReaction.message.guild.member(user).removeRole(RoleArt);
 				break;
