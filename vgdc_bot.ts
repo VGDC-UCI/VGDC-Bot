@@ -18,14 +18,17 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.63";
-const BotVersionMsg: string = "Hopefully fix pronoun reactions";
+const BotVersion: string = "1.7";
+const BotVersionMsg: string = "Update to new API";
 
 const TokenFile: string = "token/token.txt";
 
 const ServerVGDC: string = "228326116270538753";
 const ChannelBotCommands: string = "653120059262369793";
 const ChannelLabStatus: string = "629369478462963722";
+
+const RoleOfficer: string = "364492667335213057";
+const RoleAdmin: string = "230588792820596739";
 
 const ReactionID1: string = "%F0%9F%87%AD";
 const ReactionID2: string = "%F0%9F%87%B8";
@@ -77,10 +80,7 @@ function mention(userId: string): string {
 function processCommand(message: Message): void {
 	switch (message.content.substr(1)) {
 		case "labopen": {
-			let roleTest = message.guild.roles.find(r => r.name === "VGDC Officer");
-			let roleTest2 = message.guild.roles.find(r => r.name === "VGDC Admin");
-
-			if ((message.member.roles.has(roleTest.id) || message.member.roles.has(roleTest2.id)) && message.channel.id === ChannelLabStatus) {
+			if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
 				BotClient.user.setActivity("Game Lab OPEN");
 				BotClient.user.setStatus("online");
 				labOpen = true;
@@ -91,10 +91,7 @@ function processCommand(message: Message): void {
 		}
 
 		case "labclosed": {
-			let roleTest = message.guild.roles.find(r => r.name === "VGDC Officer");
-			let roleTest2 = message.guild.roles.find(r => r.name === "VGDC Admin");
-
-			if ((message.member.roles.has(roleTest.id) || message.member.roles.has(roleTest2.id)) && message.channel.id === ChannelLabStatus) {
+			if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
 				BotClient.user.setActivity("Game Lab CLOSED");
 				BotClient.user.setStatus("dnd");
 				labOpen = false;
@@ -105,10 +102,7 @@ function processCommand(message: Message): void {
 		}
 
 		case "version": {
-			let roleTest = message.guild.roles.find(r => r.name === "VGDC Officer");
-			let roleTest2 = message.guild.roles.find(r => r.name === "VGDC Admin");
-
-			if ((message.member.roles.has(roleTest.id) || message.member.roles.has(roleTest2.id)) && message.channel.id === ChannelLabStatus)
+			if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus)
 				message.channel.send(`Lippo's current version is ${BotVersion} (${BotVersionMsg})`);
 
 			break;
@@ -120,27 +114,27 @@ function processCommand(message: Message): void {
 function processCommandGameJam(message: Message): void {
 	switch (message.content.substr(1)) {
 		case "designer":
-			message.member.addRole(RoleGameJamDesigner);
+			message.member.roles.add(RoleGameJamDesigner);
 			break;
 
 		case "audio":
-			message.member.addRole(RoleGameJamAudioDesigner);
+			message.member.roles.add(RoleGameJamAudioDesigner);
 			break;
 		
 		case "artist":
-			message.member.addRole(RoleGameJamArtist);
+			message.member.roles.add(RoleGameJamArtist);
 			break;
 		
 		case "programmer":
-			message.member.addRole(RoleGameJamProgrammer);
+			message.member.roles.add(RoleGameJamProgrammer);
 			break;
 		
 		case "writer":
-			message.member.addRole(RoleGameJamWriter);
+			message.member.roles.add(RoleGameJamWriter);
 			break;
 		
 		case "producer":
-			message.member.addRole(RoleGameJamProducer);
+			message.member.roles.add(RoleGameJamProducer);
 			break;
 	}
 }
@@ -182,34 +176,34 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelBotCommands) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
-				messageReaction.message.guild.member(user).addRole(Role1);
+				messageReaction.message.member.roles.add(Role1);
 				break;
 			case ReactionID2:
-				messageReaction.message.guild.member(user).addRole(Role2);
+				messageReaction.message.member.roles.add(Role2);
 				break;
 			case ReactionID3:
-				messageReaction.message.guild.member(user).addRole(Role3);
+				messageReaction.message.member.roles.add(Role3);
 				break;
 			case ReactionID4:
-				messageReaction.message.guild.member(user).addRole(Role4);
+				messageReaction.message.member.roles.add(Role4);
 				break;
 			case DepartmentID1:
-				messageReaction.message.guild.member(user).addRole(RoleArt);
+				messageReaction.message.member.roles.add(RoleArt);
 				break;
 			case DepartmentID2:
-				messageReaction.message.guild.member(user).addRole(RoleAudio);
+				messageReaction.message.member.roles.add(RoleAudio);
 				break;
 			case DepartmentID3:
-				messageReaction.message.guild.member(user).addRole(RoleDesign);
+				messageReaction.message.member.roles.add(RoleDesign);
 				break;
 			case DepartmentID4:
-				messageReaction.message.guild.member(user).addRole(RoleProduction);
+				messageReaction.message.member.roles.add(RoleProduction);
 				break;
 			case DepartmentID5:
-				messageReaction.message.guild.member(user).addRole(RoleProgramming);
+				messageReaction.message.member.roles.add(RoleProgramming);
 				break;
 			case DepartmentID6:
-				messageReaction.message.guild.member(user).addRole(RoleWriting);
+				messageReaction.message.member.roles.add(RoleWriting);
 				break;
 		}
 	}
@@ -220,34 +214,34 @@ BotClient.on("messageReactionRemove", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelBotCommands) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
-				messageReaction.message.guild.member(user).removeRole(Role1);
+				messageReaction.message.member.roles.remove(Role1);
 				break;
 			case ReactionID2:
-				messageReaction.message.guild.member(user).removeRole(Role2);
+				messageReaction.message.member.roles.remove(Role2);
 				break;
 			case ReactionID3:
-				messageReaction.message.guild.member(user).removeRole(Role3);
+				messageReaction.message.member.roles.remove(Role3);
 				break;
 			case ReactionID4:
-				messageReaction.message.guild.member(user).removeRole(Role4);
+				messageReaction.message.member.roles.remove(Role4);
 				break;
 			case DepartmentID1:
-				messageReaction.message.guild.member(user).removeRole(RoleArt);
+				messageReaction.message.member.roles.remove(RoleArt);
 				break;
 			case DepartmentID2:
-				messageReaction.message.guild.member(user).removeRole(RoleAudio);
+				messageReaction.message.member.roles.remove(RoleAudio);
 				break;
 			case DepartmentID3:
-				messageReaction.message.guild.member(user).removeRole(RoleDesign);
+				messageReaction.message.member.roles.remove(RoleDesign);
 				break;
 			case DepartmentID4:
-				messageReaction.message.guild.member(user).removeRole(RoleProduction);
+				messageReaction.message.member.roles.remove(RoleProduction);
 				break;
 			case DepartmentID5:
-				messageReaction.message.guild.member(user).removeRole(RoleProgramming);
+				messageReaction.message.member.roles.remove(RoleProgramming);
 				break;
 			case DepartmentID6:
-				messageReaction.message.guild.member(user).removeRole(RoleWriting);
+				messageReaction.message.member.roles.remove(RoleWriting);
 				break;
 		}
 	}
