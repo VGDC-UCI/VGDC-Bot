@@ -18,14 +18,16 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.62";
-const BotVersionMsg: string = "Hopefully fix pronoun reactions";
+const BotVersion: string = "1.6";
+const BotVersionMsg: string = "New reaction functionality part two";
 
 const TokenFile: string = "token/token.txt";
 
 const ServerVGDC: string = "228326116270538753";
-const ChannelBotCommands: string = "653120059262369793";
+const ChannelBotCommands: string = "591789863116996610";
+const ChannelBotTest: string = "691714798957887581";
 const ChannelLabStatus: string = "629369478462963722";
+const ChannelReactions: string = "653120059262369793";
 
 const ReactionID1: string = "%F0%9F%87%AD";
 const ReactionID2: string = "%F0%9F%87%B8";
@@ -169,7 +171,7 @@ BotClient.on("message", (receivedMessage) => {
 
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
-	if (messageReaction.message.channel.id === ChannelBotCommands) {
+	if (messageReaction.message.channel.id === ChannelReactions) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user).addRole(Role1);
@@ -183,6 +185,11 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 			case ReactionID4:
 				messageReaction.message.guild.member(user).addRole(Role4);
 				break;
+		}
+	}
+
+	if (messageReaction.message.channel.id === ChannelReactions || messageReaction.message.channel.id === ChannelBotTest) {
+		switch (messageReaction.emoji.identifier) {
 			case DepartmentID1:
 				messageReaction.message.guild.member(user).addRole(RoleArt);
 				break;
@@ -207,7 +214,7 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 
 
 BotClient.on("messageReactionRemove", (messageReaction, user) => {
-	if (messageReaction.message.channel.id === ChannelBotCommands) {
+	if (messageReaction.message.channel.id === ChannelReactions) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user).removeRole(Role1);
@@ -221,6 +228,11 @@ BotClient.on("messageReactionRemove", (messageReaction, user) => {
 			case ReactionID4:
 				messageReaction.message.guild.member(user).removeRole(Role4);
 				break;
+		}
+	}
+
+	if (messageReaction.message.channel.id === ChannelReactions || messageReaction.message.channel.id === ChannelBotTest) {
+		switch (messageReaction.emoji.identifier) {
 			case DepartmentID1:
 				messageReaction.message.guild.member(user).removeRole(RoleArt);
 				break;
