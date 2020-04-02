@@ -13,12 +13,12 @@
  */
 
 
-import { Client, Message, MessageReaction, UserResolvable } from "discord.js";
+import { Client, Message, MessageReaction, UserResolvable, TextChannel, DiscordAPIError, ReactionCollector } from "discord.js";
 import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.7";
+const BotVersion: string = "1.73";
 const BotVersionMsg: string = "Update to new API";
 
 const TokenFile: string = "token/token.txt";
@@ -29,6 +29,9 @@ const ChannelLabStatus: string = "629369478462963722";
 
 const RoleOfficer: string = "364492667335213057";
 const RoleAdmin: string = "230588792820596739";
+
+const MessagePronouns: string = "656993023112118285";
+const MessageDepartments: string = "691732673995079740";
 
 const ReactionID1: string = "%F0%9F%87%AD";
 const ReactionID2: string = "%F0%9F%87%B8";
@@ -52,6 +55,7 @@ const QuestionRegex: RegExp = /(?:is.+the.+lab.+(?:open|closed))|(?:is.+the.+gam
 const SecretLabRegex: RegExp = /(?:[s$]\s*(?:[e3&]\s*)+[ck]\s*[r4]\s*(?:[e3&i1]\s*)+[t7]\s*([e3&]\s*)*\s*[l1]\s*[a@8&]\s*[b8])/i;
 
 var labOpen: boolean = false;
+var reactionCollector: ReactionCollector;
 
 const GameJamMode: boolean = false;
 const ServerGameJam: string = "634283765555920897";
@@ -112,7 +116,7 @@ function processCommand(message: Message): void {
 
 
 function processCommandGameJam(message: Message): void {
-	switch (message.content.substr(1)) {
+	/*switch (message.content.substr(1)) {
 		case "designer":
 			message.member.roles.add(RoleGameJamDesigner);
 			break;
@@ -136,7 +140,7 @@ function processCommandGameJam(message: Message): void {
 		case "producer":
 			message.member.roles.add(RoleGameJamProducer);
 			break;
-	}
+	}*/
 }
 
 // =========================================================================
@@ -146,6 +150,8 @@ BotClient.on("ready", () => {
 
 	BotClient.user.setActivity("Game Lab CLOSED");
 	BotClient.user.setStatus("dnd");
+
+	(BotClient.channels.cache.find(c => c.id === ChannelBotCommands) as TextChannel).messages.fetchPinned(true);
 });
 
 
@@ -174,6 +180,7 @@ BotClient.on("message", (receivedMessage) => {
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelBotCommands) {
+		console.log("REACTION ADDED in channel");
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user as UserResolvable).roles.add(Role1);
@@ -212,6 +219,7 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 
 BotClient.on("messageReactionRemove", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelBotCommands) {
+		console.log("REACTION REMOVED in channel");
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user as UserResolvable).roles.remove(Role1);
