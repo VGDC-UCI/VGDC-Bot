@@ -18,8 +18,8 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.6";
-const BotVersionMsg: string = "New reaction functionality part two";
+const BotVersion: string = "1.61";
+const BotVersionMsg: string = "Hopefully fix pronoun reactions";
 
 const TokenFile: string = "token/token.txt";
 
@@ -171,7 +171,7 @@ BotClient.on("message", (receivedMessage) => {
 
 
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
-	if (messageReaction.message.channel.id === ChannelReactions) {
+	if (messageReaction.message.channel.id === ChannelReactions || messageReaction.message.channel.id === ChannelBotTest) {
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user).addRole(Role1);
@@ -185,11 +185,6 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 			case ReactionID4:
 				messageReaction.message.guild.member(user).addRole(Role4);
 				break;
-		}
-	}
-
-	if (messageReaction.message.channel.id === ChannelReactions || messageReaction.message.channel.id === ChannelBotTest) {
-		switch (messageReaction.emoji.identifier) {
 			case DepartmentID1:
 				messageReaction.message.guild.member(user).addRole(RoleArt);
 				break;
