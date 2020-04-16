@@ -18,8 +18,8 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.73";
-const BotVersionMsg: string = "Update to new API";
+const BotVersion: string = "1.74";
+const BotVersionMsg: string = "In which a single character and unhelpful error messages drive our heroes to insanity.";
 
 const TokenFile: string = "token/token.txt";
 
@@ -257,5 +257,5 @@ BotClient.on("messageReactionRemove", (messageReaction, user) => {
 
 // =========================================================================
 
-var token: string = fs.readFileSync(TokenFile).toString();
+var token: string = fs.readFileSync(TokenFile).toString().trim();
 BotClient.login(token);
