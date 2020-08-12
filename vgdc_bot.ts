@@ -92,14 +92,17 @@ function mention(userId: string): string {
 }
 
 
-function send_faq(channel: TextChannel, faqQuestion: string, text: string): void {
-	const embed = new MessageEmbed()
+function send_faq(channel: TextChannel, faqTopic: string, questions: Array<string>, answers: Array<string>): void {
+	let embed: MessageEmbed = new MessageEmbed()
 		.setColor("#8bb0f9")
-		.setTitle(`FAQ - ${faqQuestion}`)
-		.setThumbnail("https://i.imgur.com/2AaGXDv.png")
-		.setDescription(text);
+		.setTitle(`FAQ - ${faqTopic}`)
+		.setThumbnail("https://i.imgur.com/2AaGXDv.png");
 
-		channel.send(embed);
+	for (let i = 0; i < questions.length; i++) {
+		embed.addField(questions[i], answers[i]);
+	}
+
+	channel.send(embed);
 }
 
 
@@ -118,7 +121,11 @@ function processCommand(message: Message): void {
 			} break;
 
 			case "test": {
-				send_faq(messageChannel, "Test", "HELLO THERE!!! THIS IS A TEST OF THIS FANCY THING THAT DISCORD CALLS \"EMBEDS!\" WHOA!");
+				//send_faq(messageChannel, "Test", "HELLO THERE!!! THIS IS A TEST OF THIS FANCY THING THAT DISCORD CALLS \"EMBEDS!\" WHOA!");
+				send_faq(messageChannel, "Test",
+					["Why should I join VGDC?", "Where can I find your club's Discord?", "Who are you?"],
+					["Because making games is cool.", "You're in it. Yay.", "Yeah, that's my favorite song by The Who. Also, I'm Lippo."]
+				);
 			} break;
 
 			default: {
