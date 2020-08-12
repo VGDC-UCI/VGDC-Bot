@@ -13,13 +13,13 @@
  */
 
 
-import { Client, Message, MessageReaction, UserResolvable, TextChannel, DiscordAPIError, ReactionCollector } from "discord.js";
+import { Client, Message, MessageReaction, UserResolvable, TextChannel, DiscordAPIError, ReactionCollector, MessageEmbed } from "discord.js";
 import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.74";
-const BotVersionMsg: string = "In which a single character and unhelpful error messages drive our heroes to insanity.";
+const BotVersion: string = "1.8";
+const BotVersionMsg: string = "Start implementing embed faq functionality";
 
 const TokenFile: string = "token/token.txt";
 
@@ -49,6 +49,17 @@ const Role1: string = "591784945765187588";
 const Role2: string = "591785143757176842";
 const Role3: string = "591785165626408960";
 const Role4: string = "591785189349261312";
+
+const OfficerBirthdays: object = {
+	"736303719284473958": new Date(0, 2 - 1, 12), // Duncan (Feb 12)
+	"167126082338684938": new Date(0, 7 - 1, 4), // George (Jul 4)
+	"364459051892998144": new Date(0, 4 - 1, 10), // Jen (Apr 10)
+
+	"330809583763456011": new Date(0, 5 - 1, 20), // Mayan (May 20)
+	"203323862006497281": new Date(0, 9 - 1, 23), // Riley (Sep 23)
+	"192908991486099457": new Date(0, 6 - 1, 8), // Tina (Jun 8)
+	"233340915886981121": new Date(0, 7 - 1, 24), // Wayne (Jul 24)
+};
 
 const QuestionRegex: RegExp = /(?:is.+the.+lab.+(?:open|closed))|(?:is.+the.+game.+lab.+(?:open|closed))|(?:(?:is.+)?anyone.+(?:in|at).+the.+lab)|(?:(?:is.+)?anyone.+(?:in|at).+the.+game.+lab)|(?:are.+there.+(?:any.+)?in.+the.+lab)|(?:are.+there.+(?:any)?.+(?:in|at).+the.+game.+lab)|(?:any.+(?:in|at).+the.+lab)|(?:any.+(?:in|at).+the.+game.+lab)|(?:(?:is)?.+(?:there.+)?(?:a|an)?(?:officer|person|anyone|someone).+(?:in|at).+the.+(?:game.+)?lab)/i;
 //const BotNameRegex: RegExp = /(?:Lippo)/i;
@@ -81,35 +92,64 @@ function mention(userId: string): string {
 }
 
 
+function send_faq(channel: TextChannel, faqQuestion: string, text: string): void {
+	const embed = new MessageEmbed()
+		.setColor("#8bb0f9")
+		.setTitle(`FAQ - ${faqQuestion}`)
+		.setThumbnail("https://i.imgur.com/2AaGXDv.png")
+		.setDescription(text);
+
+		channel.send(embed);
+}
+
+
+function send_faq_list(): void {
+
+}
+
+
 function processCommand(message: Message): void {
-	switch (message.content.substr(1)) {
-		case "labopen": {
-			if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
-				BotClient.user.setActivity("Game Lab OPEN");
-				BotClient.user.setStatus("online");
-				labOpen = true;
-				console.log("Lab is now marked as OPEN.");
-			}
+	let command: string = message.content.substr(1);
+	let messageChannel: TextChannel = message.channel as TextChannel;
+	if (command.startsWith("faq-")) {
+		switch (command.substr(4)) {
+			case "major": {
 
-			break;
+			} break;
+
+			case "test": {
+				send_faq(messageChannel, "Test", "HELLO THERE!!! THIS IS A TEST OF THIS FANCY THING THAT DISCORD CALLS \"EMBEDS!\" WHOA!");
+			} break;
+
+			default: {
+
+			} break;
 		}
-
-		case "labclosed": {
-			if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
-				BotClient.user.setActivity("Game Lab CLOSED");
-				BotClient.user.setStatus("dnd");
-				labOpen = false;
-				console.log("Lab is now marked as CLOSED.");
-			}
-
-			break;
-		}
-
-		case "version": {
-			if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus)
-				message.channel.send(`Lippo's current version is ${BotVersion} (${BotVersionMsg})`);
-
-			break;
+	}
+	else {
+		switch (command) {
+			case "labopen": {
+				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
+					BotClient.user.setActivity("Game Lab OPEN");
+					BotClient.user.setStatus("online");
+					labOpen = true;
+					console.log("Lab is now marked as OPEN.");
+				}
+			} break;
+	
+			case "labclosed": {
+				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
+					BotClient.user.setActivity("Game Lab CLOSED");
+					BotClient.user.setStatus("dnd");
+					labOpen = false;
+					console.log("Lab is now marked as CLOSED.");
+				}
+			} break;
+	 
+			case "version": {
+				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus)
+					message.channel.send(`Lippo's current version is ${BotVersion} (${BotVersionMsg})`);	
+			} break;
 		}
 	}
 }
@@ -159,9 +199,13 @@ BotClient.on("message", (receivedMessage) => {
 	if (receivedMessage.author === BotClient.user)
 		return;
 
+	// FAQ
+	if (receivedMessage.guild.id === ServerVGDC && receivedMessage.content[0] === '!')
+		processCommand(receivedMessage);
+
 	// GAME JAM
-	if (GameJamMode && receivedMessage.guild.id === ServerGameJam && receivedMessage.channel.id === ChannelGameJamRoles && receivedMessage.content[0] === '!')
-		processCommandGameJam(receivedMessage);
+	/*if (GameJamMode && receivedMessage.guild.id === ServerGameJam && receivedMessage.channel.id === ChannelGameJamRoles && receivedMessage.content[0] === '!')
+		processCommandGameJam(receivedMessage);*/
 
 	// Commands
 	if (receivedMessage.guild.id === ServerVGDC && (receivedMessage.channel.id === ChannelBotCommands || receivedMessage.channel.id === ChannelLabStatus) && receivedMessage.content[0] === '!')
