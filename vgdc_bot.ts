@@ -18,7 +18,7 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.92";
+const BotVersion: string = "1.95";
 const BotVersionMsg: string = "General member role";
 
 const TokenFile: string = "token/token.txt";
@@ -44,6 +44,8 @@ const DepartmentID3: string = "%F0%9F%8E%AE"; // "🎮"; //"%E2%9A%99"; // Desig
 const DepartmentID4: string = "%E2%98%91%EF%B8%8F"; //"☑️"; //"%E2%98%91"; // Production: ballot box with check
 const DepartmentID5: string = "%E2%9A%99%EF%B8%8F";  //"⚙️"; //"" // Programming: gear
 const DepartmentID6: string = "%F0%9F%93%96"; //"📖"; // Writing: open book
+
+const VerificationReaction: string = "%E2%9C%85"
 
 const Role1: string = "591784945765187588";
 const Role2: string = "591785143757176842";
@@ -159,20 +161,6 @@ function processCommand(message: Message): void {
 				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus)
 					message.channel.send(`Lippo's current version is ${BotVersion} (${BotVersionMsg})`);	
 			} break;
-
-			case "assigngeneralmemberroles": {
-				
-				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
-					console.log("assigning roles");
-					message.guild.members.fetch().then(fetchedMembers => {
-						fetchedMembers.forEach(member => {
-							member.roles.add(RoleGeneralMember);
-						});
-					});
-
-					console.log("assigned roles");
-				}
-			} break;
 		}
 	}
 }
@@ -278,6 +266,9 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 				break;
 			case DepartmentID6:
 				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleWriting);
+				break;
+			case VerificationReaction:
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleGeneralMember);
 				break;
 		}
 	}
