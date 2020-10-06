@@ -162,11 +162,9 @@ function processCommand(message: Message): void {
 
 			case "assigngeneralmemberroles": {
 				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
-					let server = BotClient.guilds.cache.find(s => s.id === ServerVGDC);
-					server.members.fetch().then(fetchedMembers => {
-						for (let member of fetchedMembers.values()) {
-							member.roles.add(RoleGeneralMember);
-						}
+					message.guild.members.fetch();
+					message.guild.members.cache.forEach(member => {
+						member.roles.add(RoleGeneralMember);
 					});
 				}
 			} break;
