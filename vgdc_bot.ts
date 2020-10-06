@@ -13,13 +13,13 @@
  */
 
 
-import { Client, Message, MessageReaction, UserResolvable, TextChannel, DiscordAPIError, ReactionCollector, MessageEmbed } from "discord.js";
+import { Client, Message, MessageReaction, UserResolvable, TextChannel, DiscordAPIError, ReactionCollector, MessageEmbed, GuildMember } from "discord.js";
 import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.8";
-const BotVersionMsg: string = "Start implementing embed faq functionality";
+const BotVersion: string = "1.9";
+const BotVersionMsg: string = "General member role";
 
 const TokenFile: string = "token/token.txt";
 
@@ -77,6 +77,8 @@ const RoleGameJamArtist: string  = "634463662718844940";
 const RoleGameJamProgrammer: string = "634463664765665321";
 const RoleGameJamWriter: string = "634463666909216816";
 const RoleGameJamProducer: string = "634463670461792297";
+
+const RoleGeneralMember: string = "763146575840542771";
 
 const RoleArt: string = "691715402677485669";
 const RoleAudio: string = "691715513381945364";
@@ -156,6 +158,14 @@ function processCommand(message: Message): void {
 			case "version": {
 				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus)
 					message.channel.send(`Lippo's current version is ${BotVersion} (${BotVersionMsg})`);	
+			} break;
+
+			case "assigngeneralmemberroles": {
+				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
+					for (let member of message.guild.members.cache.values()) {
+						member.roles.add(RoleGeneralMember);
+					}
+				}
 			} break;
 		}
 	}
