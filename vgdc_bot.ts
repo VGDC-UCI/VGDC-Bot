@@ -18,7 +18,7 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.9";
+const BotVersion: string = "1.91";
 const BotVersionMsg: string = "General member role";
 
 const TokenFile: string = "token/token.txt";
@@ -162,9 +162,12 @@ function processCommand(message: Message): void {
 
 			case "assigngeneralmemberroles": {
 				if ((message.member.roles.cache.has(RoleOfficer) || message.member.roles.cache.has(RoleAdmin)) && message.channel.id === ChannelLabStatus) {
-					for (let member of message.guild.members.cache.values()) {
-						member.roles.add(RoleGeneralMember);
-					}
+					let server = BotClient.guilds.cache.find(s => s.id === ServerVGDC);
+					server.members.fetch().then(fetchedMembers => {
+						for (let member of fetchedMembers.values()) {
+							member.roles.add(RoleGeneralMember);
+						}
+					});
 				}
 			} break;
 		}
