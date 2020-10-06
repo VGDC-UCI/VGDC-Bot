@@ -18,8 +18,8 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.95";
-const BotVersionMsg: string = "General member role";
+const BotVersion: string = "1.96";
+const BotVersionMsg: string = "General member role and verification";
 
 const TokenFile: string = "token/token.txt";
 
