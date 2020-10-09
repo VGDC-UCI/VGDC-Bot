@@ -18,7 +18,7 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.96";
+const BotVersion: string = "1.10.0";
 const BotVersionMsg: string = "General member role and verification";
 
 const TokenFile: string = "token/token.txt";
@@ -44,6 +44,7 @@ const DepartmentID3: string = "%F0%9F%8E%AE"; // "🎮"; //"%E2%9A%99"; // Desig
 const DepartmentID4: string = "%E2%98%91%EF%B8%8F"; //"☑️"; //"%E2%98%91"; // Production: ballot box with check
 const DepartmentID5: string = "%E2%9A%99%EF%B8%8F";  //"⚙️"; //"" // Programming: gear
 const DepartmentID6: string = "%F0%9F%93%96"; //"📖"; // Writing: open book
+const DepartmentID7: string = "%F0%9F%93%8A"; // "📊"; // UI/UX: bar chart
 
 const VerificationReaction: string = "%E2%9C%85"
 
@@ -88,6 +89,7 @@ const RoleDesign: string = "691715413998043186";
 const RoleProduction: string = "691715438580596764";
 const RoleProgramming: string = "691715359496994818";
 const RoleWriting: string = "691715498668195911";
+const RoleUIUX: string = "764218531595550770";
 
 // =========================================================================
 
@@ -267,6 +269,9 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 			case DepartmentID6:
 				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleWriting);
 				break;
+			case DepartmentID7:
+				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleUIUX);
+				break;
 			case VerificationReaction:
 				messageReaction.message.guild.member(user as UserResolvable).roles.add(RoleGeneralMember);
 				break;
@@ -308,6 +313,9 @@ BotClient.on("messageReactionRemove", (messageReaction, user) => {
 				break;
 			case DepartmentID6:
 				messageReaction.message.guild.member(user as UserResolvable).roles.remove(RoleWriting);
+				break;
+			case DepartmentID7:
+				messageReaction.message.guild.member(user as UserResolvable).roles.remove(RoleUIUX);
 				break;
 		}
 	}
