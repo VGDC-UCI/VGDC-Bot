@@ -18,7 +18,7 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.10.6";
+const BotVersion: string = "1.10.8";
 const BotVersionMsg: string = "Probably doesn't fix it";
 
 const TokenFile: string = "token/token.txt";
