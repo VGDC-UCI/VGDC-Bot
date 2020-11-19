@@ -18,8 +18,8 @@ import * as fs from "fs";
 
 const BotClient: Client = new Client();
 
-const BotVersion: string = "1.10.0";
-const BotVersionMsg: string = "General member role and verification";
+const BotVersion: string = "1.10.6";
+const BotVersionMsg: string = "Probably doesn't fix it";
 
 const TokenFile: string = "token/token.txt";
 
@@ -238,6 +238,7 @@ BotClient.on("message", (receivedMessage) => {
 BotClient.on("messageReactionAdd", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelBotCommands) {
 		console.log("REACTION ADDED in channel");
+		messageReaction.users.fetch();
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user as UserResolvable).roles.add(Role1);
@@ -283,6 +284,7 @@ BotClient.on("messageReactionAdd", (messageReaction, user) => {
 BotClient.on("messageReactionRemove", (messageReaction, user) => {
 	if (messageReaction.message.channel.id === ChannelBotCommands) {
 		console.log("REACTION REMOVED in channel");
+		messageReaction.message.guild.members.fetch();
 		switch (messageReaction.emoji.identifier) {
 			case ReactionID1:
 				messageReaction.message.guild.member(user as UserResolvable).roles.remove(Role1);
